@@ -78,6 +78,31 @@ namespace CodeFirst.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("CodeFirst.Models.Manager", b =>
+                {
+                    b.Property<int>("ManagerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rank")
+                        .HasColumnType("int");
+
+                    b.HasKey("ManagerId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Managers");
+                });
+
             modelBuilder.Entity("CodeFirst.Models.Employee", b =>
                 {
                     b.HasOne("CodeFirst.Models.Department", "Departments")
@@ -87,6 +112,25 @@ namespace CodeFirst.Migrations
                         .IsRequired();
 
                     b.Navigation("Departments");
+                });
+
+            modelBuilder.Entity("CodeFirst.Models.Manager", b =>
+                {
+                    b.HasOne("CodeFirst.Models.Department", "Departments")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CodeFirst.Models.Employee", "Employees")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Departments");
+
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

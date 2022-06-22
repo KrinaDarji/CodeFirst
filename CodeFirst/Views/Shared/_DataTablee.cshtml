@@ -1,0 +1,64 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+
+<style>
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+        font-weight: bold;
+    }
+
+    .table th, .table td {
+        padding: 0.1rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+        font-weight: normal;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('#ConfirmTable').DataTable({
+            paging: true
+        });
+    });
+</script>
+
+<table id="ConfirmTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%" data-order='[[ 1, "asc" ]]' data-page-length='4'>
+    <thead>
+        <tr>
+            <th>
+                OrderDate
+            </th>
+            <th>
+                OrderNumber
+            </th>
+            <th>
+                ModifiedOn
+            </th>
+        </tr>
+    </thead>
+   @* <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.OrderDate
+                </td>
+                <td>
+                    <a href="#" onclick="OpenNew(@item.OrderNumber)" id="anchor">@item.OrderNumber</a>
+                </td>
+                <td>
+                    @item.ModifiedOn
+                </td>
+            </tr>
+        }
+    </tbody>*@
+</table>

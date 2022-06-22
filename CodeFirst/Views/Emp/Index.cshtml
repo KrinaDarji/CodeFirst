@@ -9,6 +9,11 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<div class="text-center">
+    <form method="post" asp-controller="emp" asp-action="ExportDataToFile">
+        <input type="submit" value="Export to CSV" />
+        </form>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -81,6 +86,5 @@
             </tr>
         }
     </tbody>
- 
-    
+   
 </table>

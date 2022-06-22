@@ -108,21 +108,28 @@ namespace CodeFirst.Controllers
             employeeRepository.DeleteEmployee(id);
             return RedirectToAction(nameof(Index));
         }
-        /*[HttpPost]
-        public IActionResult ExportDataToFile()
+        [HttpPost]
+        public ActionResult ExportDataToFile()
         {
-            var dictioneryexportType = Request.Form.ToDictionary(x => x.Key, x => x.Value.ToString());
-            var exportType = dictioneryexportType["Export"];
-            var products = GetEmployeeDetail(); 
-            ExportToCsv(products);
-            return RedirectToAction("Index");
+            try
+            {
+                //  var dictioneryexportType = Request.Form.ToDictionary(x => x.Key, x => x.Value.ToString());
+                var products = GetEmployeeDetail();
+                ExportToCsv(products);
+                return RedirectToAction(nameof(Index));
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+
         }
         private DataTable GetEmployeeDetail()
         {
             var employees = employeeRepository.GetEmployees();
 
             DataTable dtEmployee = new DataTable("EmployeeDetails");
-            dtEmployee.Columns.AddRange(new DataColumn[] { new DataColumn("ID"),
+            dtEmployee.Columns.AddRange(new DataColumn[10] { new DataColumn("ID"),
                                             new DataColumn("FirstName"),
                                             new DataColumn("LastName"),
                                             new DataColumn("EmailAddress"),
@@ -135,32 +142,41 @@ namespace CodeFirst.Controllers
                                                     });
             foreach (var emp in employees)
             {
-                dtEmployee.Rows.Add(emp.Id, emp.FirstName, emp.LastName, emp.EmailAddress,emp.Phone,emp.Address,emp.DepartmentId,emp.Gender,emp.Salary,emp.DOB);
+                dtEmployee.Rows.Add(emp.Id, emp.FirstName, emp.LastName, emp.EmailAddress, emp.Phone, emp.Address, emp.DepartmentId, emp.Gender, emp.Salary, emp.DOB);
             }
 
             return dtEmployee;
         }
         private void ExportToCsv(DataTable employee)
         {
-            StringBuilder sb = new StringBuilder();
-
-            IEnumerable<string> columnNames = employee.Columns.Cast<DataColumn>().
-                                              Select(column => column.ColumnName);
-            sb.AppendLine(string.Join(",", columnNames));
-
-            foreach (DataRow row in employee.Rows)
+            try
             {
-                IEnumerable<string> fields = row.ItemArray.Select(field =>
-                  string.Concat("\"", field.ToString().Replace("\"", "\"\""), "\""));
-                sb.AppendLine(string.Join(",", fields));
+                StringBuilder sb = new StringBuilder();
+
+                IEnumerable<string> columnNames = employee.Columns.Cast<DataColumn>().
+                                                  Select(column => column.ColumnName);
+                sb.AppendLine(string.Join(",", columnNames));
+
+                foreach (DataRow row in employee.Rows)
+                {
+                    IEnumerable<string> fields = row.ItemArray.Select(field =>
+                      string.Concat("\"", field.ToString().Replace("\"", "\"\""), "\""));
+                    sb.AppendLine(string.Join(",", fields));
+                }
+                byte[] byteArray = ASCIIEncoding.ASCII.GetBytes(sb.ToString());
+                Response.Clear();
+                Response.Headers.Add("content-disposition", "attachment;filename=Employeedetails.csv");
+                Response.ContentType = "application/text";
+                Response.Body.WriteAsync(byteArray);
+                Response.Body.Flush();
             }
-            byte[] byteArray = ASCIIEncoding.ASCII.GetBytes(sb.ToString());
-            Response.Clear();
-            Response.Headers.Add("content-disposition", "attachment;filename=Employeedetails.csv");
-            Response.ContentType = "application/text";
-            Response.Body.WriteAsync(byteArray);
-            Response.Body.Flush();
+            catch (Exception)
+            {
+
+                throw;
+            }
+          
         }
-    }*/
     }
 }
+
