@@ -1,6 +1,7 @@
 ﻿using CodeFirst.Models;
 using CodeFirst.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -16,11 +17,17 @@ namespace CodeFirst.Controllers
     {
         private readonly IEmployeeRepository employeeRepository;
         private readonly ApplicationDbContext db;
+        private readonly UserManager<Employee> userManager;
+       // private readonly SignInManager<IdentityUser> signInManager;
 
-        public EmpController(IEmployeeRepository employeeRepository, ApplicationDbContext applicationDbContext)
+        public EmpController(IEmployeeRepository employeeRepository, ApplicationDbContext applicationDbContext, 
+           UserManager<Employee> userManager)
         {
+
             this.employeeRepository = employeeRepository;
             db = applicationDbContext;
+            this.userManager = userManager;
+            //this.signInManager = signInManager;
         }
         // GET: EmpController
         public ActionResult Index()
