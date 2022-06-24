@@ -9,14 +9,14 @@
         var departmentId = $('#department').val();
         $('#emp').empty();
         $('#emp').append('<Option>--select employee--</Option>');
-        $('#employess').empty();
+        $('#employees').empty();
         document.getElementById('empTbl').style.display = 'block';
         $.ajax({
             url: '/Managers/getEmployeeByDeptId?departmentId=' + departmentId,
             success: function (result) {
                 $.each(result, function (i, data) {
                     debugger;
-                    $('#employess').append('<tr> <td>' + data.departments.department_Name + '</td> <td>' + data.employees.firstName + '</td> </tr>');
+                    $('#employees').append('<tr> <td>' + data.departments.department_Name + '</td> <td>' + data.employees.firstName + '</td> </tr>');
                     console.log(data.rank);
                 });
             }
