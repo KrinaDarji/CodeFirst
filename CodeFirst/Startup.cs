@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using CodeFirst.Repository;
 
 namespace CodeFirst
@@ -27,13 +29,21 @@ namespace CodeFirst
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddControllersWithViews();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-        }
+             options.UseSqlServer(
+    Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddHttpContextAccessor();
+          
+           
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -58,7 +68,7 @@ namespace CodeFirst
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=EMP}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
