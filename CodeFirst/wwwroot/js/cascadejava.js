@@ -1,21 +1,28 @@
 ﻿$(document).ready(function () {
     GetDepartment();
-   
     $('#emp').attr('disabled', true);
     $('#department').change(function () {
         $('#emp').attr('disabled', false);
         var id = $(this).val();
-        debugger;
+    
         var departmentId = $('#department').val();
         $('#emp').empty();
         $('#emp').append('<Option>--select employee--</Option>');
+        $.ajax({
+            url: '/Projects/getEmployeeManagerByDeptId?departmentId=' + departmentId,
+            success: function (result) {
+                $.each(result, function (i, data) {
+                    $('#emp').append('<Option value=' + data.id + '>' + data.employees.firstName + '</Option>');
+                    console.log(data.rank);
+                });
+            }
+        });
         $('#employees').empty();
         document.getElementById('empTbl').style.display = 'block';
         $.ajax({
             url: '/Managers/getEmployeeByDeptId?departmentId=' + departmentId,
             success: function (result) {
                 $.each(result, function (i, data) {
-                    debugger;
                     $('#employees').append('<tr> <td>' + data.departments.department_Name + '</td> <td>' + data.employees.firstName + '</td> </tr>');
                     console.log(data.rank);
                 });
