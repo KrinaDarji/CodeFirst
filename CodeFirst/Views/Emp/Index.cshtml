@@ -18,28 +18,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+             <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam">  @Html.DisplayNameFor(model => model.FirstName)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.LastSortParam">  @Html.DisplayNameFor(model => model.LastName)</a>
+</th>
             <th>
-                @Html.DisplayNameFor(model => model.EmailAddress)
-            </th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam">  @Html.DisplayNameFor(model => model.EmailAddress) </a>
+</th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam">  @Html.DisplayNameFor(model => model.Phone) </a>
+</th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam">  @Html.DisplayNameFor(model => model.Address) </a>
+</th>
             <th>
-                @Html.DisplayNameFor(model => model.Departments)
-            </th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam">   @Html.DisplayNameFor(model => model.Departments) </a>
+</th>
             <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam"> @Html.DisplayNameFor(model => model.Gender) </a>
+</th>
             <th>
-                @Html.DisplayNameFor(model => model.Salary)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.SalSortParam">    @Html.DisplayNameFor(model => model.Salary)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DOB)
