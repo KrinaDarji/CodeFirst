@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using PagedList;
 namespace CodeFirst.Controllers
 {
     public class EmpController : Controller
@@ -23,9 +24,28 @@ namespace CodeFirst.Controllers
             db = applicationDbContext;
         }
         // GET: EmpController
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
             var employee = employeeRepository.GetEmployees();
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            ViewBag.SalSortParam = String.IsNullOrEmpty(sortOrder) ? "Sal_desc" : "";
+            ViewBag.LastSortParam = String.IsNullOrEmpty(sortOrder) ? "Last_desc" : "";
+            switch (sortOrder)
+            {
+                case "Name_desc":
+                  employee= employeeRepository.GetEmployees().OrderByDescending(x=>x.FirstName);
+                    break;
+                case "Sal_desc":
+                    employee = employeeRepository.GetEmployees().OrderByDescending(x => x.Salary);
+                    break;
+                case "Last_desc":
+                    employee = employeeRepository.GetEmployees().OrderByDescending(x => x.LastName);
+                    break;
+                default:
+                     employee= employeeRepository.GetEmployees().OrderBy(x=>x.FirstName);
+                    break;
+            }
+            //var employee = employeeRepository.GetEmployees();
             return View(employee);
 
         }
