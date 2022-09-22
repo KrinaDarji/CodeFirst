@@ -24,32 +24,41 @@ namespace CodeFirst.Controllers
             db = applicationDbContext;
         }
         // GET: EmpController
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string empSearch)
         {
             var employee = employeeRepository.GetEmployees();
-            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
-            ViewBag.SalSortParam = String.IsNullOrEmpty(sortOrder) ? "Sal_desc" : "";
-            ViewBag.LastSortParam = String.IsNullOrEmpty(sortOrder) ? "Last_desc" : "";
-            switch (sortOrder)
+            
+            ViewData["Getemployeedetails"] = empSearch;
+            if (!String.IsNullOrEmpty(empSearch))
             {
-                case "Name_desc":
-                  employee= employeeRepository.GetEmployees().OrderByDescending(x=>x.FirstName);
-                    break;
-                case "Sal_desc":
-                    employee = employeeRepository.GetEmployees().OrderByDescending(x => x.Salary);
-                    break;
-                case "Last_desc":
-                    employee = employeeRepository.GetEmployees().OrderByDescending(x => x.LastName);
-                    break;
-                default:
-                     employee= employeeRepository.GetEmployees().OrderBy(x=>x.FirstName);
-                    break;
+                employee = employeeRepository.GetEmployees().Where(c => c.FirstName.Contains(empSearch));
             }
-            //var employee = employeeRepository.GetEmployees();
-            return View(employee);
+            else
+            {
+                ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+                ViewBag.SalSortParam = String.IsNullOrEmpty(sortOrder) ? "Sal_desc" : "";
+                ViewBag.LastSortParam = String.IsNullOrEmpty(sortOrder) ? "Last_desc" : "";
+                switch (sortOrder)
+                {
+                    case "Name_desc":
+                        employee = employeeRepository.GetEmployees().OrderByDescending(x => x.FirstName);
+                        break;
+                    case "Sal_desc":
+                        employee = employeeRepository.GetEmployees().OrderByDescending(x => x.Salary);
+                        break;
+                    case "Last_desc":
+                        employee = employeeRepository.GetEmployees().OrderByDescending(x => x.LastName);
+                        break;
+                    default:
+                        employee = employeeRepository.GetEmployees().OrderBy(x => x.FirstName);
+                        break;
+                }
+            }
+          
+            return View(employee.ToList());
 
         }
-
+  
         // GET: EmpController/Details/5
         public ActionResult Details(int id)
         {
