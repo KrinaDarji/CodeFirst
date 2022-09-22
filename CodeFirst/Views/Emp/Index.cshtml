@@ -10,34 +10,40 @@
     <a asp-action="Create">Create New</a>
 </p>
 <div class="text-center">
+    <form method="get" asp-action="Index">
+        <p>
+            <input type ="search" placeholder="Enter Employee Name ..." value="@ViewData["Getemployeedetails"]" name="empSearch" />
+            <input type="submit" value="Search" class="btn btn-dark"/>
+        </p>
+    </form>
     <form method="post" asp-controller="emp" asp-action="ExportDataToFile">
         <input type="submit" value="Export to CSV" />
-        </form>
+    </form>
 </div>
 <table class="table">
     <thead>
         <tr>
             <th>
-             <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam">  @Html.DisplayNameFor(model => model.FirstName)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam">  @Html.DisplayNameFor(model => model.FirstName)</a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.LastSortParam">  @Html.DisplayNameFor(model => model.LastName)</a>
-</th>
+            </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam">  @Html.DisplayNameFor(model => model.EmailAddress) </a>
-</th>
+            </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam">  @Html.DisplayNameFor(model => model.Phone) </a>
-</th>
+            </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam">  @Html.DisplayNameFor(model => model.Address) </a>
-</th>
+            </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam">   @Html.DisplayNameFor(model => model.Departments) </a>
-</th>
+            </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParam"> @Html.DisplayNameFor(model => model.Gender) </a>
-</th>
+            </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewBag.SalSortParam">    @Html.DisplayNameFor(model => model.Salary)</a>
             </th>
@@ -86,5 +92,5 @@
             </tr>
         }
     </tbody>
-   
+
 </table>
